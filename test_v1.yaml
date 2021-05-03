@@ -1,0 +1,10 @@
+{
+  data_dir: '../data/bms',
+  context_name: 'test',
+  model_name: 'v1',
+  train_batch_size: 256
+    
+  # restore_model_path: '../data/bms/allgrps-fulltrain-2/model_final_20210430_091724.pth',
+  # eval_model_names: []
+  # eval_dataset_types: ['val']
+}

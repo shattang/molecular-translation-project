@@ -1,0 +1,15 @@
+{
+  data_dir: '../data/bms',
+  context_name: 'prod1',
+  model_name: 'v1_lr0',
+  dataset_sample_size: 10000,
+  learning_rate: 1.e-2,
+  num_epochs: 30,
+  train_batch_size: 512,
+  eval_batch_size: 1280,
+  #save_per_batch_iter: 100,
+  
+  # restore_model_path: '../data/bms/prod1/v1_20210502_192148/model_final_20210430_091724.pth',
+  # eval_model_names: ['v1_20210502_192148'],
+  # eval_dataset_types: ['val', 'train']
+}
