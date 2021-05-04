@@ -1,7 +1,7 @@
 {
   data_dir: '../data/bms',
   context_name: 'prod1',
-  model_name: 'v1_lr0',
+  model_name: 'v1_lr5',
   dataset_sample_size: 10000,
   learning_rate: 1.e-2,
   num_epochs: 30,

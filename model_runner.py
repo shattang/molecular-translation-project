@@ -118,7 +118,7 @@ class ModelRunner:
         criterion = nn.CrossEntropyLoss(ignore_index=vocab.get_pad_word())
         return model, criterion
 
-    def evaluate(self, model_path, dataset_mode='val'):
+    def evaluate(self, model_path, dataset_mode='val', dataset=None):
         now = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         logging.info('Running evaluation: model={} dataset={} device={} ts={}'.format(
             model_path, dataset_mode, self.device, now))
@@ -132,7 +132,8 @@ class ModelRunner:
             torch.set_num_threads(ncpu - 1)
 
         context = self.context
-        dataset = self.make_dataset(context, dataset_mode)
+        if dataset is None:
+            dataset = self.make_dataset(context, dataset_mode)
         data_loader = self.make_data_loader(dataset, self.eval_batch_size)
         model, criterion = self.make_model(dataset)
 
@@ -326,11 +327,12 @@ if __name__ == '__main__':
     elif args.evaluate:
         eval_model_names = settings['eval_model_names']
         eval_dataset_types = settings['eval_dataset_types']
-        for model_name in eval_model_names:
-            glob_fil = os.path.join(
-                data_dir, context_name, model_name, "model_*.pth")
-            for model_path in glob.glob(glob_fil):
-                for dataset_type in eval_dataset_types:
-                    runner.evaluate(model_path, dataset_type)
+        for dataset_type in eval_dataset_types:
+            eval_dataset = runner.make_dataset(runner.context, dataset_type)
+            for model_name in eval_model_names:
+                glob_fil = os.path.join(
+                    data_dir, context_name, model_name, "model_*.pth")
+                for model_path in glob.glob(glob_fil):
+                    runner.evaluate(model_path, dataset_type, eval_dataset)
     else:
         print('Need to specify either train or evaluate')
